@@ -1,0 +1,82 @@
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: 'tsconfig.eslint.json',
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint/eslint-plugin', 'unused-imports', 'boundaries'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'plugin:sonarjs/recommended',
+  ],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
+  ignorePatterns: ['.eslintrc.js'],
+  rules: {
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'unused-imports/no-unused-imports': 'error',
+    'comma-dangle': ['error', 'only-multiline'],
+    'eqeqeq': ['error', 'always', { null: 'ignore' }],
+    'import/order': [
+      'error',
+      {
+        'groups': ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'pathGroups': [
+          {
+            pattern: '@nestjs/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: '@*/**',
+            group: 'internal',
+          },
+        ],
+        'pathGroupsExcludedImportTypes': [],
+        'newlines-between': 'never',
+        'alphabetize': { order: 'asc', caseInsensitive: false },
+      },
+    ],
+    'no-else-return': ['error', { allowElseIf: false }],
+    'no-implicit-coercion': 'error',
+    'no-useless-return': 'error',
+    'object-shorthand': 'error',
+    'prefer-const': 'error',
+    'quotes': ['error', 'single', { allowTemplateLiterals: true }],
+    'sort-imports': [
+      'error',
+      {
+        ignoreDeclarationSort: true,
+        memberSyntaxSortOrder: ['all', 'single', 'multiple', 'none'],
+        allowSeparatedGroups: true,
+      },
+    ],
+    'padding-line-between-statements': [
+      'error',
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: ['block-like', 'const', 'export', 'let', 'return', 'throw'],
+      },
+      { blankLine: 'always', prev: ['block-like', 'multiline-const', 'multiline-let'], next: '*' },
+      { blankLine: 'any', prev: ['const', 'let', 'if'], next: ['const', 'let', 'if'] },
+    ],
+    'yoda': 'error',
+    'import/no-unresolved': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'import/namespace': 'off',
+    'sonarjs/no-duplicate-string': 'off',
+    'sonarjs/cognitive-complexity': 'off',
+  },
+};
