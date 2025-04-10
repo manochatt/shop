@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  # replica set
+  db:
+    container_name: mongo1
+    image: mongo:latest
+    command: ['--replSet', 'rs0', '--bind_ip_all', '--port', '27017']
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    healthcheck:
+      test: echo "try { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo1:27017',priority:1},{_id:1,host:'mongo2:27018',priority:0.5},{_id:2,host:'mongo3:27019',priority:0.5}]}) } catch (err) { rs.status() }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - 'mongo1_data:/data/db'
+      - 'mongo1_config:/data/configdb'
+
+  mongo2:
+    container_name: mongo2
+    image: mongo:latest
+    command: ['--replSet', 'rs0', '--bind_ip_all', '--port', '27018']
+    ports:
+      - 27018:27018
+    volumes:
+      - 'mongo2_data:/data/db'
+      - 'mongo2_config:/data/configdb'
+
+  mongo3:
+    container_name: mongo3
+    image: mongo:latest
+    command: ['--replSet', 'rs0', '--bind_ip_all', '--port', '27019']
+    ports:
+      - 27019:27019
+    volumes:
+      - 'mongo3_data:/data/db'
+      - 'mongo3_config:/data/configdb'
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    ports:
+      - '8080:8081'
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo1:27017,mongo2:27018,mongo3:27019/ks-local?retryWrites=true&w=majority
+      ME_CONFIG_BASICAUTH: false
