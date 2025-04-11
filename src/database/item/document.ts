@@ -4,7 +4,7 @@ import { BaseSchema } from '../model';
 
 @BaseSchema()
 export class ItemDocument {
-  @Prop({ unique: true, sparse: true })
+  @Prop({ unique: true })
   name: string;
 
   @Prop()

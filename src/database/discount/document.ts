@@ -5,7 +5,7 @@ import { ItemCategory } from '../item/enum';
 
 @BaseSchema()
 export class DiscountDocument {
-  @Prop()
+  @Prop({ unique: true })
   code: string;
 
   @Prop()

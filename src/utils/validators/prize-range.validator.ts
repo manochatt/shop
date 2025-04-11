@@ -22,7 +22,7 @@ export class PrizeRangeValidator implements ValidatorConstraintInterface {
       number
     >;
 
-    if (minPrize && maxPrize) return minPrize > 0 && maxPrize > minPrize;
+    if (minPrize && maxPrize) return minPrize > 0 && maxPrize >= minPrize;
     if (minPrize) return minPrize > 0;
     if (maxPrize) return maxPrize > 0;
 

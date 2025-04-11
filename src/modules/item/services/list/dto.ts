@@ -1,4 +1,13 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min, Validate } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsNumberString,
+  IsOptional,
+  IsString,
+  Min,
+  Validate,
+} from 'class-validator';
 import { ItemCategory } from 'src/database/item/enum';
 import { IsEnums } from 'src/utils/decorators/dto.decorator';
 import { PaginationQuery } from 'src/utils/models/pagination.model';
@@ -15,12 +24,12 @@ export class ListItemQuery extends PaginationQuery {
   categories?: ItemCategory[];
 
   @IsOptional()
-  @IsNumber()
+  @IsNumberString()
   @Validate(PrizeRangeValidator)
   minPrize?: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsNumberString()
   @Validate(PrizeRangeValidator)
   maxPrize?: number;
 }
