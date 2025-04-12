@@ -1,9 +1,16 @@
 import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CreateItemDto } from './services/create/dto';
-import { CreateItemService, GetItemService, ListItemService, UpdateItemService } from './services';
+import {
+  CreateItemService,
+  GetItemService,
+  ListItemService,
+  ShoppingService,
+  UpdateItemService,
+} from './services';
 import { IdParam, ResponseDto } from 'src/core/dto';
 import { ListItemQuery } from './services/list/dto';
 import { UpdateItemDto } from './services/update/dto';
+import { ShoppingDto } from './services/shopping/dto';
 
 @Controller('items')
 export class ItemController {
@@ -11,6 +18,7 @@ export class ItemController {
     private readonly createItemService: CreateItemService,
     private readonly getItemService: GetItemService,
     private readonly listItemService: ListItemService,
+    private readonly shoppingService: ShoppingService,
     private readonly updateItemService: UpdateItemService,
   ) {}
 
@@ -38,6 +46,13 @@ export class ItemController {
   @Patch(':id')
   async update(@Param() { id }: IdParam, @Body() dto: UpdateItemDto) {
     const data = await this.updateItemService.exec(id, dto);
+
+    return ResponseDto.ok({ data });
+  }
+
+  @Post('shopping')
+  async shopping(@Body() dto: ShoppingDto) {
+    const data = await this.shoppingService.exec(dto);
 
     return ResponseDto.ok({ data });
   }

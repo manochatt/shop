@@ -29,8 +29,11 @@ export class CreateDiscountDto {
   category: DiscountCategory;
 
   @ValidateIf(({ category }: CreateDiscountDto) => category === DiscountCategory.ON_TOP)
+  @IsEnum(ItemCategory)
   itemCategory?: ItemCategory;
 
   @ValidateIf(({ category }: CreateDiscountDto) => category === DiscountCategory.SEASONAL)
+  @IsNumber()
+  @Min(0)
   minAmount?: number;
 }
