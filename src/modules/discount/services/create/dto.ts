@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { DiscountCategory, DiscountType } from 'src/database/discount/enum';
 import { ItemCategory } from 'src/database/item/enum';
+import { DiscountTypeValidator } from 'src/utils/validators/discount-type.validator';
 import { MaxPercentageValidator } from 'src/utils/validators/max-percentage.validator';
 
 export class CreateDiscountDto {
@@ -23,6 +24,7 @@ export class CreateDiscountDto {
   value: number;
 
   @IsEnum(DiscountType)
+  @Validate(DiscountTypeValidator)
   type: DiscountType;
 
   @IsEnum(DiscountCategory)

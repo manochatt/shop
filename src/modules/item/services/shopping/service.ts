@@ -29,7 +29,8 @@ export class ShoppingService {
     finalAmount = await this.discountByCoupon(amountSummary, finalAmount, discountCode);
     finalAmount = await this.discountByOntop(amountSummary, finalAmount, point);
     finalAmount = await this.discountBySeasonal(finalAmount);
-    return { totalAmount, finalAmount };
+
+    return { totalAmount, finalAmount: Number(finalAmount.toFixed(2)) };
   }
 
   // Get amount summary by category
