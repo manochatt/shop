@@ -1,73 +1,167 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 🛍️ Shop Playtorium API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A simple REST API for managing shop items and discount codes, and simulating a shopping process.
 
-## Description
+## 📝 Prerequisite
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Github
+- Docker
+- Postman (optional)
 
-## Installation
+## 🔗 Set Up
 
-```bash
-$ npm install
+1. Pull the code
+
+```
+git clone https://github.com/manochatt/shop.git
+```
+2. Run docker compose command
+
+```
+docker compose up -d
+```
+3. Test the API
+ - You can use either **Postman** or **http://localhost:3000/api** to test
+ - Visit **http://localhost:8081** to see the database.
+
+---
+
+## 📦 Items API
+
+### ➕ Create Item
+
+**POST** `/items`
+
+Create a new item.
+
+**Request Body (example):**
+
+```json
+{
+  "name": "item_C",
+  "category": "accessories",
+  "prize": 150
+}
 ```
 
-## Running the app
+---
 
-```bash
-# development
-$ npm run start
+### 📄 Get Item by ID
 
-# watch mode
-$ npm run start:dev
+**GET** `/items/:id`
 
-# production mode
-$ npm run start:prod
+Retrieve details for a single item.
+
+**Path Variable:**
+
+- `id`: Item ID (e.g. `67f88c4cb2c34b657bdbd190`)
+
+---
+
+### 📋 List Items
+
+**GET** `/items`
+
+Retrieve a list of items with optional filters:
+
+**Query Parameters (optional):**
+
+- `name`: Filter by name
+- `categories`: Filter with array of item category (e.g. clothing, accessories)
+- `minPrize`: Minimum prize
+- `maxPrize`: Maximum prize
+- `limit`: Pagination limit
+- `offset`: Pagination offset
+
+---
+
+### ✏️ Update Item
+
+**PATCH** `/items/:id`
+
+Update the name or details of an item.
+
+**Request Body (example):**
+
+```json
+{
+  "name": "shirts",
+  "category": "clothing",
+  "prize": 300
+}
 ```
 
-## Test
+---
 
-```bash
-# unit tests
-$ npm run test
+### 🛒 Shopping
 
-# e2e tests
-$ npm run test:e2e
+**POST** `/items/shopping`
 
-# test coverage
-$ npm run test:cov
+Simulate a shopping process with optional discount codes and point redemption.
+
+**Request Body (example):**
+
+```json
+{
+  "itemIds": [
+    "67f88c4cb2c34b657bdbd190",
+    "67f8ef505a4c544b07e65935",
+    "67fa352ffbd5394644da4ba3"
+  ],
+  "discountCode": "DIS00",
+  "point": 78
+}
+```
+> **Note:** discountCode represent to the discount with type coupon | 1 point equal to 1 THB (both field is optional you can fill either or both)
+
+---
+
+## 🎟️ Discounts API
+
+### ➕ Create Discount
+
+**POST** `/discounts`
+
+Create a new discount code.
+
+**Request Body (example):**
+
+```json
+{
+  "code": "DIS50",
+  "value": 50,
+  "type": "percent",
+  "category": "onTop",
+  "itemCategory": "accessories"
+}
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 📄 Get Discount by ID
 
-## Stay in touch
+**GET** `/discounts/:id`
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Retrieve a specific discount by its ID.
 
-## License
+---
 
-Nest is [MIT licensed](LICENSE).
+### 📋 List All Discounts
+
+**GET** `/discounts`
+
+Retrieve all available discount codes.
+
+---
+
+### ❌ Delete Discount
+
+**DELETE** `/discounts/:id`
+
+Remove a discount by its ID.
+
+---
+
+## 🤓 Contributor
+Manoch Attaudomporn
