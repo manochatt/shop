@@ -2,7 +2,7 @@ services:
   # backend
   api:
     container_name: api
-    image: shop:1.0
+    image: shop:1.1
     # build: .
     ports:
       - 3000:3000

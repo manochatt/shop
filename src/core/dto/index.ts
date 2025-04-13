@@ -1,7 +1,9 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId } from 'class-validator';
 
 export class IdParam {
+  @ApiProperty()
   @IsMongoId()
   id: string;
 }
