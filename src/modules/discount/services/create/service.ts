@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDiscountDto } from './dto';
-import { ErrorException } from 'src/core/exceptions';
-import { MongoErrorCode } from 'src/utils/mongoose/mongoose.enum';
+import { ErrorException } from 'core/exceptions';
+import { MongoErrorCode } from 'utils/mongoose/mongoose.enum';
 import { InjectModel } from '@nestjs/mongoose';
-import { Discount, DiscountModel } from 'src/database/discount/schema';
+import { Discount, DiscountModel } from 'database/discount/schema';
 
 @Injectable()
 export class CreateDiscountService {

@@ -8,10 +8,10 @@ import {
   Validate,
   ValidateIf,
 } from 'class-validator';
-import { DiscountCategory, DiscountType } from 'src/database/discount/enum';
-import { ItemCategory } from 'src/database/item/enum';
-import { DiscountTypeValidator } from 'src/utils/validators/discount-type.validator';
-import { MaxPercentageValidator } from 'src/utils/validators/max-percentage.validator';
+import { DiscountCategory, DiscountType } from 'database/discount/enum';
+import { ItemCategory } from 'database/item/enum';
+import { DiscountTypeValidator } from 'utils/validators/discount-type.validator';
+import { MaxPercentageValidator } from 'utils/validators/max-percentage.validator';
 
 export class CreateDiscountDto {
   @IsString()

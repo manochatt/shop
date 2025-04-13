@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Item, ItemModel } from 'src/database/item/schema';
+import { Item, ItemModel } from 'database/item/schema';
 import { CreateItemDto } from './dto';
-import { ErrorException } from 'src/core/exceptions';
-import { MongoErrorCode } from 'src/utils/mongoose/mongoose.enum';
+import { ErrorException } from 'core/exceptions';
+import { MongoErrorCode } from 'utils/mongoose/mongoose.enum';
 
 @Injectable()
 export class CreateItemService {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { getDatabaseFactory } from 'src/core/config/database.configuration';
+import { getDatabaseFactory } from 'core/config/database.configuration';
 import { ItemModelFactory } from './item/schema';
 import { DiscountModelFactory } from './discount/schema';
 

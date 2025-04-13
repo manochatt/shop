@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ListItemQuery } from './dto';
 import { FilterQuery } from 'mongoose';
-import { Item, ItemModel } from 'src/database/item/schema';
-import { RegExpr } from 'src/utils/helpers/regex';
+import { Item, ItemModel } from 'database/item/schema';
+import { RegExpr } from 'utils/helpers/regex';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()

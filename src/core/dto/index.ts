@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { IsMongoId } from 'class-validator';
-import { ObjectId } from 'src/database/model';
 
 export class IdParam {
   @IsMongoId()

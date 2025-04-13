@@ -1,5 +1,21 @@
-version: '3.9'
 services:
+  # backend
+  api:
+    container_name: api
+    image: shop:1.0
+    # build: .
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=local
+      - MONGO_HOST=host.docker.internal
+      - MONGO_OPTIONS=directConnection=true&retryWrites=true&w=majority
+      - MONGO_URL=mongodb://mongo1:27017,mongo2:27018,mongo3:27019/shop?retryWrites=true&w=majority
+
+    depends_on:
+      - db
+    restart: always
+
   # replica set
   db:
     container_name: mongo1
@@ -45,5 +61,13 @@ services:
     ports:
       - '8080:8081'
     environment:
-      ME_CONFIG_MONGODB_URL: mongodb://mongo1:27017,mongo2:27018,mongo3:27019/ks-local?retryWrites=true&w=majority
+      ME_CONFIG_MONGODB_URL: mongodb://mongo1:27017,mongo2:27018,mongo3:27019/shop?retryWrites=true&w=majority
       ME_CONFIG_BASICAUTH: false
+
+volumes:
+  mongo1_data:
+  mongo2_data:
+  mongo3_data:
+  mongo1_config:
+  mongo2_config:
+  mongo3_config:

@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
-import { ItemCategory } from 'src/database/item/enum';
+import { ItemCategory } from 'database/item/enum';
 
 export class UpdateItemDto {
   @IsOptional()

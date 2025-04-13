@@ -16,7 +16,7 @@ import {
   ListDiscountService,
 } from './services';
 import { CreateDiscountDto } from './services/create/dto';
-import { IdParam, ResponseDto } from 'src/core/dto';
+import { IdParam, ResponseDto } from 'core/dto';
 import { ListDiscountQuery } from './services/list/dto';
 
 @Controller('discounts')

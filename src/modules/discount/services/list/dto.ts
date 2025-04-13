@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { DiscountCategory } from 'src/database/discount/enum';
-import { IsEnums } from 'src/utils/decorators/dto.decorator';
-import { PaginationQuery } from 'src/utils/models/pagination.model';
+import { DiscountCategory } from 'database/discount/enum';
+import { IsEnums } from 'utils/decorators/dto.decorator';
+import { PaginationQuery } from 'utils/models/pagination.model';
 
 export class ListDiscountQuery extends PaginationQuery {
   @IsOptional()

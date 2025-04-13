@@ -3,7 +3,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { DiscountCategory, DiscountType } from 'src/database/discount/enum';
+import { DiscountCategory, DiscountType } from 'database/discount/enum';
 
 @ValidatorConstraint()
 export class DiscountTypeValidator implements ValidatorConstraintInterface {

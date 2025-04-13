@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Discount, DiscountModel } from 'src/database/discount/schema';
+import { Discount, DiscountModel } from 'database/discount/schema';
 import { ListDiscountQuery } from './dto';
 import { FilterQuery } from 'mongoose';
-import { RegExpr } from 'src/utils/helpers/regex';
+import { RegExpr } from 'utils/helpers/regex';
 
 @Injectable()
 export class ListDiscountService {

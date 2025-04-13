@@ -3,7 +3,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { DiscountType } from 'src/database/discount/enum';
+import { DiscountType } from 'database/discount/enum';
 
 @ValidatorConstraint()
 export class MaxPercentageValidator implements ValidatorConstraintInterface {

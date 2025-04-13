@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Discount, DiscountModel } from 'src/database/discount/schema';
-import { Item, ItemModel } from 'src/database/item/schema';
+import { Discount, DiscountModel } from 'database/discount/schema';
+import { Item, ItemModel } from 'database/item/schema';
 import { ShoppingDto } from './dto';
 import { Types } from 'mongoose';
-import { DiscountCategory, DiscountType } from 'src/database/discount/enum';
+import { DiscountCategory, DiscountType } from 'database/discount/enum';
 import { ShoppingResponse } from './response';
 
 const MAX_USED_POINT_PERCENT = 20;
@@ -79,30 +79,29 @@ export class ShoppingService {
     totalAmount: number,
     point?: number,
   ) {
-    if (Boolean(point)) {
-      const maxPointUsed =
-        point > totalAmount * (MAX_USED_POINT_PERCENT / 100)
-          ? totalAmount * (MAX_USED_POINT_PERCENT / 100)
-          : point;
-      return totalAmount - maxPointUsed;
-    }
+    if (!point) {
+      let newTotalAmount = 0;
+      for (const [key, value] of Object.entries(amountSummary)) {
+        const onTop = await this.discountModel.findOne({
+          category: DiscountCategory.ON_TOP,
+          itemCategory: key,
+        });
+        if (!onTop) {
+          newTotalAmount += amountSummary[key];
 
-    let newTotalAmount = 0;
-    for (const [key, value] of Object.entries(amountSummary)) {
-      const onTop = await this.discountModel.findOne({
-        category: DiscountCategory.ON_TOP,
-        itemCategory: key,
-      });
-      if (!onTop) {
+          continue;
+        }
+
+        amountSummary[key] = (value * (100 - onTop.value)) / 100;
         newTotalAmount += amountSummary[key];
-
-        continue;
       }
-
-      amountSummary[key] = (value * (100 - onTop.value)) / 100;
-      newTotalAmount += amountSummary[key];
+      return newTotalAmount;
     }
-    return newTotalAmount;
+    const maxPointUsed =
+      point > totalAmount * (MAX_USED_POINT_PERCENT / 100)
+        ? totalAmount * (MAX_USED_POINT_PERCENT / 100)
+        : point;
+    return totalAmount - maxPointUsed;
   }
 
   // Discount amount by seasonal
@@ -111,7 +110,7 @@ export class ShoppingService {
       category: DiscountCategory.SEASONAL,
       minAmount: { $exists: true },
     });
-    if (!seasonal) return totalAmount;
+    if (!seasonal || !seasonal.minAmount) return totalAmount;
 
     const discountAmount = Math.floor(totalAmount / seasonal.minAmount) * seasonal.value;
     return totalAmount - discountAmount;

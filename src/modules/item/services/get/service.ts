@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ErrorException } from 'src/core/exceptions';
-import { Item, ItemModel } from 'src/database/item/schema';
-import { ObjectId } from 'src/database/model';
+import { ErrorException } from 'core/exceptions';
+import { Item, ItemModel } from 'database/item/schema';
 
 @Injectable()
 export class GetItemService {

@@ -1,5 +1,5 @@
 import { IsEnum, IsNumber, IsString, Min } from 'class-validator';
-import { ItemCategory } from 'src/database/item/enum';
+import { ItemCategory } from 'database/item/enum';
 
 export class CreateItemDto {
   @IsString()

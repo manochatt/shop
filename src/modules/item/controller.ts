@@ -7,7 +7,7 @@ import {
   ShoppingService,
   UpdateItemService,
 } from './services';
-import { IdParam, ResponseDto } from 'src/core/dto';
+import { IdParam, ResponseDto } from 'core/dto';
 import { ListItemQuery } from './services/list/dto';
 import { UpdateItemDto } from './services/update/dto';
 import { ShoppingDto } from './services/shopping/dto';
